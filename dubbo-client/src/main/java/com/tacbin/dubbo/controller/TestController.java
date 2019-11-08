@@ -5,6 +5,7 @@ import com.sun.xml.internal.bind.v2.model.core.ID;
 import com.tacbin.dubbo.spi.IDubboInsertHelloWorld;
 import com.tacbin.dubbo.spi.IDubboSpiService;
 import com.tacbin.dubbo.spi.ISpiService;
+import com.tacbin.dubbo.spi.impl.LocalService;
 import com.tacbin.dubbo.spi.impl.RemoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,9 @@ import java.util.ServiceLoader;
 public class TestController {
     @Autowired
     RemoteService service;
+
+    @Autowired
+    LocalService localService;
 
     @RequestMapping("/")
     public String remoteService() {
@@ -47,5 +51,10 @@ public class TestController {
     public String autoWrapper(){
         IDubboInsertHelloWorld helloWorld = ExtensionLoader.getExtensionLoader(IDubboInsertHelloWorld.class).getExtension("impl");
         return helloWorld.getHelloWorld();
+    }
+
+    @RequestMapping("/steal")
+    public String steal() {
+        return localService.helloWorld();
     }
 }
