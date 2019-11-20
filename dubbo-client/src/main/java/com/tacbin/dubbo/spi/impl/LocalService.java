@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
  **/
 @Service
 public class LocalService {
-    @Reference
+    @Reference(check = false)
     ILocalProvider localProvider;
 
     public String helloWorld() {
